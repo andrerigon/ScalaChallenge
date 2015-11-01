@@ -1,5 +1,7 @@
 package com.andre.rigon
 
+import com.andre.rigon.task._
+
 import scala.collection.mutable
 import scala.io.BufferedSource
 
@@ -23,9 +25,8 @@ object Parser {
   private def buildTask(t1: String, t2: String, definedTasks: mutable.Map[String, Task]) = {
     def isValid(s: String*) = s.foreach(s => if(!definedTasks.contains(s)) throw new RuntimeException(s"invlaid task <$s> to link"))
     isValid(t1, t2)
-    if(!definedTasks.contains(t2)) throw new RuntimeException(s"Invalid task <$t2> to link")
 
-    Some(new LinkTask(definedTasks(t1), definedTasks(t2)))
+    Some(new Link(definedTasks(t1), definedTasks(t2)))
   }
 
 
@@ -34,18 +35,10 @@ object Parser {
 
 object TaskParser {
   def apply(op: String): Task = op match {
-    case "echo" => EchoTask
-    case "delay" => DelayTask
-    case "reverse" => ReverseTask
-    case "noop" => NoopTask
+    case "echo" => Echo
+    case "delay" => Delay
+    case "reverse" => Reverse
+    case "noop" => Noop
   }
 }
 
-object A extends App {
-  val task = "task (\\w+) (echo|bla)".r
-
-  val task(name, typee) = "task echo bla"
-
-  println(s"name: $name")
-  println(s"typee: $typee")
-}

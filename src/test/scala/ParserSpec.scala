@@ -1,6 +1,7 @@
 import java.io.ByteArrayInputStream
 
 import com.andre.rigon._
+import com.andre.rigon.task._
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.{BeforeAndAfter, FlatSpec, Matchers}
 
@@ -21,10 +22,10 @@ class ParserSpec extends FlatSpec with Matchers with MockitoSugar with BeforeAnd
     val tasks = List( "reverse", "delay", "echo", "noop").map(TaskParser.apply)
 
     tasks should be(List(
-      ReverseTask,
-      DelayTask,
-      EchoTask,
-      NoopTask
+      Reverse,
+      Delay,
+      Echo,
+      Noop
     ))
   }
 
@@ -61,8 +62,8 @@ class ParserSpec extends FlatSpec with Matchers with MockitoSugar with BeforeAnd
      val tasks = Parser(new BufferedSource(toStream(data)))
 
      tasks should be(List(
-       new LinkTask(ReverseTask, DelayTask),
-       new LinkTask(EchoTask, NoopTask)
+       new Link(Reverse, Delay),
+       new Link(Echo, Noop)
      ))
    }
 
