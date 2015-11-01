@@ -4,25 +4,27 @@ trait Task {
 
   def process(input: String) = join(exec(split(input)))
 
-  def exec(input: Seq[String]): Seq[String]
+  def exec(input: Seq[String]): Seq[String] = input
 
   private def split(input: String) = input.split(" ").toSeq
 
   private def join(input: Seq[String]) = input.mkString(" ")
 }
 
-class EchoTask extends Task {
+object EchoTask extends Task {
   override def exec(input: Seq[String]): Seq[String] = input.map(s => s + s)
 }
 
-class ReverseTask extends Task {
+object ReverseTask extends Task {
   override def exec(input: Seq[String]): Seq[String] = input.map(_.reverse)
 }
 
-class DelayTask extends NoopTask {
+object DelayTask extends Task {
   override def process(input: String) = s"tbb $input"
 }
 
-class NoopTask extends Task {
-  override def exec(input: Seq[String]): Seq[String] = input
+object NoopTask extends Task
+
+class LinkTask(t1: Task, t2: Task) extends Task {
+  override def process(input: String) = t2.process(t1.process(input))
 }
