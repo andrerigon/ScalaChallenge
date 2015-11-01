@@ -25,6 +25,6 @@ object DelayTask extends Task {
 
 object NoopTask extends Task
 
-class LinkTask(t1: Task, t2: Task) extends Task {
+case class LinkTask(t1: Task, t2: Task) extends Task {
   override def process(input: String) = t2.process(t1.process(input))
 }
