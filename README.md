@@ -13,7 +13,7 @@ Simple App to process task networks
 
 make test
 
-## Building a executable jar
+## Building a executable jar:
 
 make build
 
